@@ -3,7 +3,7 @@
 FROM ubuntu:24.04
 
 # Update + Upgrade and nginx installation
-RUN apt-get update && apt-get upgrade && apt-get install -y nginx && \
+RUN apt-get update -y && apt-get upgrade -y && apt-get install nginx -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
