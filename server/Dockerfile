@@ -1,5 +1,6 @@
+# Backend and API Server
 # Base Image 
-FROM node:24.14.0
+FROM node:22
 
 # Setup the workdir
 WORKDIR /app
@@ -15,6 +16,9 @@ RUN pnpm install
 
 # Copy all other thigns 
 COPY . .
+
+# Expose the port
+EXPOSE 5000 
 
 # Start the server
 CMD ["node" , "index.js"]

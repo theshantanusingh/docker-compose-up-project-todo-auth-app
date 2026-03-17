@@ -1,18 +1,47 @@
+version: '3.8'
+
 services:
+  db:
+    image: mysql:8.0
+    container_name: auth-db
+    restart: always
+    environment:
+      # THE "MAGIC" SETUP: These variables create the DB and User on first launch
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=todo_auth_db
+      - MYSQL_USER=auth_user
+      - MYSQL_PASSWORD=auth_password
+    volumes:
+      # Data stays safe in this folder on your PC
+      - ./db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
   backend:
     build: ./server
     container_name: auth-backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    # We override the .env variables here to point to the Docker DB
+    environment:
+      - PORT=5000
+      - DB_HOST=db
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
+      - DB_NAME=todo_auth_db
+      - JWT_SECRET=dev_secret_key_change_this_for_production
     ports:
       - "5000:5000"
-    env_file:
-      - ./server/.env
-    restart: always
 
   client:
     build: ./client
     container_name: auth-frontend
-    ports:
-      - "80:80"
+    restart: always
     depends_on:
       - backend
-    restart: always
+    ports:
+      - "80:80"
