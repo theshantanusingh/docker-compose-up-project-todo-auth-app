@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Done.</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: var(--white);">
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Done.</a></div>
+            <div class="nav-links">
+                <a href="signup.html">Create Account</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="fade-in" style="padding-top: 15vh;">
+            <h1>Welcome back.</h1>
+            <p>Access your tasks and stay focused.</p>
+            
+            <div class="form-container">
+                <div id="auth-message"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Min. 8 characters" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Sign In</button>
+                </form>
+                <p style="margin-top: 20px; font-size: 14px; color: var(--text-secondary);">Don't have an account? <a href="signup.html" style="color: var(--primary); text-decoration: none;">Sign up here.</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

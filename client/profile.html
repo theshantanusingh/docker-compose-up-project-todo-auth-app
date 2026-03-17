@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Done.</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: var(--bg-color);">
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Done.</a></div>
+            <div class="nav-links">
+                <a href="#" id="logout-btn">Sign Out</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="loading-spinner" style="padding-top: 100px;">Loading...</div>
+        <section id="profile-section" class="fade-in" style="display: none; padding-top: 15vh;">
+            <h1>Your Profile.</h1>
+            <p>Welcome back, <span id="user-name-span">User</span>.</p>
+            
+            <div class="form-container" style="max-width: 500px; text-align: left;">
+                <div style="margin-bottom: 20px;">
+                    <label style="color: var(--text-secondary); font-size: 13px;">Full Name</label>
+                    <div id="profile-name" style="font-size: 18px; font-weight: 500;">-</div>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="color: var(--text-secondary); font-size: 13px;">Email Address</label>
+                    <div id="profile-email" style="font-size: 18px; font-weight: 500;">-</div>
+                </div>
+                <div style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+                    <p style="font-size: 14px; color: var(--text-secondary);">Member since: <span id="profile-since">Dec 2026</span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('done_token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    document.getElementById('profile-section').style.display = 'flex';
+                    document.getElementById('profile-name').innerText = data.name;
+                    document.getElementById('user-name-span').innerText = data.name;
+                    document.getElementById('profile-email').innerText = data.email;
+                } else {
+                    localStorage.removeItem('done_token');
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                console.error('Failed to fetch profile:', err);
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
