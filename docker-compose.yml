@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: ./server
+    container_name: auth-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    restart: always
+
+  client:
+    build: ./client
+    container_name: auth-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
