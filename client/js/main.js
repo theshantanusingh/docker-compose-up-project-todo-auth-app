@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Signup form handler
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const messageDiv = document.getElementById('auth-message');
             const submitBtn = signupForm.querySelector('button');
-            
+
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const messageDiv = document.getElementById('auth-message');
             const submitBtn = loginForm.querySelector('button');
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
